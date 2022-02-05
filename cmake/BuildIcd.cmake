@@ -8,7 +8,7 @@ set(CMAKE_LIST_CONTENT "
   ExternalProject_add(  icd_clone
     PREFIX              icd
     SOURCE_DIR          icd/src/icd
-    GIT_REPOSITORY      https://github.com/krrishnarraj/OpenCL-ICD-Loader
+    GIT_REPOSITORY      https://github.com/KhronosGroup/OpenCL-ICD-Loader
     GIT_TAG             master
     GIT_SHALLOW         1
     GIT_PROGRESS        1
