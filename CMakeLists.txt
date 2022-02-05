@@ -12,6 +12,8 @@ find_package(OpenCL)
 if(NOT OpenCL_FOUND)
   list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
   include(BuildIcd)
+  list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}/icd_install")
+  set(OpenCL_INCLUDE_DIR "${CMAKE_BINARY_DIR}/icd/build/icd/src/icd/inc")
   find_package(OpenCL REQUIRED)
 endif()
 
@@ -56,8 +58,9 @@ set(CLPEAK_SOURCE_FILES
 )
 
 add_executable(clpeak ${CLPEAK_SOURCE_FILES})
-target_link_libraries(clpeak ${OpenCL_LIBRARIES})
-target_include_directories(clpeak PRIVATE ${OpenCL_INCLUDE_DIRS} "include" "src/kernels")
+target_link_libraries(clpeak "${OpenCL_LIBRARIES}")
+message(STATUS "OpenCL_INCLUDE_DIRS: ${OpenCL_INCLUDE_DIRS}")
+target_include_directories(clpeak PRIVATE "${OpenCL_INCLUDE_DIRS}" "include" "src/kernels" "${CMAKE_CURRENT_BINARY_DIR}/clhpp/build/hpp/src/hpp_headers/include")
 target_compile_definitions(clpeak PRIVATE CL_TARGET_OPENCL_VERSION=120)
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR
